@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // let name="Rohan yogesh"
+        
+        // function reverse_func(name){
+        //     let content=name.split('')
+        //     console.log(content,'-content')
+        //     let result=[]
+        //     for(let i=content.length-1; i>=0; i--){
+        //         let a=name[i]
+        //         console.log(a)
+        //         result.push(a)
+                
+        //     }
+        //     console.log(result.toString().replaceAll(',',''),'fff')
+        // }
+        
+        // reverse_func(name)
+
+function reverseWord(word) {
+    // Base case: if the word is empty, return the empty string
+    if (word === "") {
+        return "";
+    } else {
+        // Recursive case: take the last character and concatenate it with the reverse of the rest of the word
+
+        return reverseWord(word.substr(1)) + word.charAt(0);
+        
+    }
+}
+
+function reverseEachWordInString(str) {
+    // Split the string into words
+    let words = str.split(" ");
+    // Reverse each word and join them back with space
+    let reversedWords = words.map(word => reverseWord(word));
+    console.log(words,'gggg')
+    return reversedWords.join(" ");
+}
+
+let name = "Rohan yogesh";
+let reversedName = reverseEachWordInString(name);
+console.log(reversedName); // Output: nahoR hsegoy
+
+    </script>
+</body>
+</html>
