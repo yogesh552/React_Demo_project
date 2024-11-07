@@ -200,10 +200,18 @@ function Demo2() {
   const [rowsPerPage, setRowsPerPage] = useState(5); // Default rows per page
   const [totalRecords, setTotalRecords] = useState(0); // Total number of records
 
+  const [roleSelector, setRoleSelector]=useState("")
+  const [designationSelector, setDesignationSelector]=useState("")
+
   // Function to fetch data from the server
   const fetchData = (page, rowsPerPage) => {
+    let role=roleSelector
+    console.log('role: ', role);
+    let designation=designationSelector
+    console.log('designation: ', designation);
+
     axios
-      .post('http://localhost:4000/emp_data', { page, rowsPerPage })
+      .post('http://localhost:4000/emp_data', { page, rowsPerPage, role, designation })
       .then((res) => {
         console.log('res: ', res.data.data1);
         setEmpData(res.data.data1);
@@ -217,7 +225,7 @@ function Demo2() {
   // Fetch data when the component mounts or when page/rowsPerPage changes
   useEffect(() => {
     fetchData(page, rowsPerPage);
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, roleSelector, designationSelector]);
 
   // Handle page change
   const handleChangePage = (event, newPage) => {
@@ -234,6 +242,28 @@ function Demo2() {
   return (
     <>
       <div>
+
+        <div className='filter-container'>
+          <div>
+            <label htmlFor="role">Role</label>
+            <select id="role" value={roleSelector} onChange={(e) => setRoleSelector(e.target.value)}>
+              <option value="">All</option>
+              <option value="ADMIN">Admin</option>
+              <option value="EMPLOYEE">Employee</option>
+              <option value="MANAGER">Manager</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="designation">Designation</label>
+            <select id="designation" value={designationSelector} onChange={(e) => setDesignationSelector(e.target.value)}>
+              <option value="">All</option>
+              <option value="CEO">CEO</option>
+              <option value="Sales Head">Sales Head</option>
+              <option value="Full Stack Developer">Full Stack Developer</option>
+            </select>
+          </div>
+        </div>
+
         <Table bordered>
           <thead>
             <tr>
