@@ -222,6 +222,7 @@ function Demo2() {
   // Handle page change
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    console.log('newPage', newPage)
   };
 
   // Handle rows per page change
