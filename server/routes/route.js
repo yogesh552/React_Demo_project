@@ -80,6 +80,7 @@ const con=require('../db/connection')
 route.post('/emp_data', function (req, res) {
   try {
     const { page, rowsPerPage, role, designation, searchText } = req.body;
+    
     const offset = page * rowsPerPage;
 
     let qry1 = `SELECT * FROM employee_master`;
@@ -98,7 +99,7 @@ route.post('/emp_data', function (req, res) {
     } else if (searchText) {
       qry1 += ` WHERE user_id = ?`;
       params1 = [searchText];
-      console.log('searchText: ', searchText);
+      // console.log('searchText: ', searchText);
     }
     
     // Add pagination parameters
