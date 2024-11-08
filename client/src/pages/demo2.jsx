@@ -204,6 +204,7 @@ function Demo2() {
 
   const [roleSelector, setRoleSelector]=useState("")
   const [designationSelector, setDesignationSelector]=useState("")
+  const [tableSearch, setTableSearch] = useState("")
 
   // Function to fetch data from the server
   const fetchData = (page, rowsPerPage) => {
@@ -213,9 +214,9 @@ function Demo2() {
     console.log('role: ', role);
     let designation=designationSelector
     console.log('designation: ', designation);
-
+    let searchText=tableSearch
     axios
-      .post('http://localhost:4000/emp_data', { page, rowsPerPage, role, designation })
+      .post('http://localhost:4000/emp_data', { page, rowsPerPage, role, designation, searchText })
       .then((res) => {
         console.log('res: ', res.data.data1);
         setEmpData(res.data.data1);
@@ -232,7 +233,7 @@ function Demo2() {
   // Fetch data when the component mounts or when page/rowsPerPage changes
   useEffect(() => {
     fetchData(page, rowsPerPage);
-  }, [page, rowsPerPage, roleSelector, designationSelector]);
+  }, [page, rowsPerPage, roleSelector, designationSelector, tableSearch]);
 
   // Handle page change
   const handleChangePage = (event, newPage) => {
@@ -251,6 +252,7 @@ function Demo2() {
       <div>
 
         <div className='filter-container'>
+          <div className='selectFilter'> 
           <div>
             <label htmlFor="role">Role</label>
             <select id="role" value={roleSelector} onChange={(e) => setRoleSelector(e.target.value)}>
@@ -268,6 +270,11 @@ function Demo2() {
               <option value="Sales Head">Sales Head</option>
               <option value="Full Stack Developer">Full Stack Developer</option>
             </select>
+          </div>
+          </div>
+          
+          <div className='searchCont'>
+              <input type="text" placeholder='Search' className='searchInput' value={tableSearch} onChange={(e) => setTableSearch(e.target.value)}/>
           </div>
         </div>
 

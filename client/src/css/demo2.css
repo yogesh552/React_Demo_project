@@ -1,13 +1,31 @@
 .filter-container{
     display: flex;
-    gap: 16px;
+    justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
+
+}
+
+.filter-container .selectFilter{
+    display: flex;
+    gap: 16px;
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
     margin:16px 0px 16px 0px
 }
 
-.filter-container label{
+.filter-container .selectFilter label{
     margin-right: 8px;
+}
+
+.filter-container .searchCont{    
+    margin:16px 0px 16px 0px
+}
+
+.filter-container .searchCont .searchInput{
+    padding: 3px 10px 3px 10px;
+    border-radius: 4px;
+    
 }
 
 .spinnerOverlay {
