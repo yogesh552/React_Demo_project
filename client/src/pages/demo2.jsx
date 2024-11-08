@@ -193,8 +193,10 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TablePagination from '@mui/material/TablePagination';
+import { ClipLoader } from "react-spinners";
 
 function Demo2() {
+  const [loader, setLoader] = useState(false)
   const [empData, setEmpData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5); // Default rows per page
@@ -205,6 +207,8 @@ function Demo2() {
 
   // Function to fetch data from the server
   const fetchData = (page, rowsPerPage) => {
+    setLoader(true)
+
     let role=roleSelector
     console.log('role: ', role);
     let designation=designationSelector
@@ -219,7 +223,10 @@ function Demo2() {
       })
       .catch((err) => {
         console.log('Error fetching data:', err);
-      });
+      })
+      .finally(()=>{
+        setLoader(false)
+      })
   };
 
   // Fetch data when the component mounts or when page/rowsPerPage changes
@@ -303,6 +310,12 @@ function Demo2() {
           <button>Back</button>
         </Link>
       </div>
+
+      {loader && (
+        <div className="spinnerOverlay" >
+          <ClipLoader loading={loader} size={50} />
+        </div>
+      )}
     </>
   );
 }
