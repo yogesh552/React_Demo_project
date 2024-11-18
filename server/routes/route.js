@@ -145,6 +145,19 @@ route.post('/emp_data', function (req, res) {
   }
 });
 
+route.post('/login', function (req, res) {
+  try{
+    let userId=req.body.userId
+    console.log('userId: ', userId);
+    let userPassword=req.body.userPassword
+    console.log('userPassword: ', userPassword);
 
+
+  }
+  catch(error){
+    console.log('Error', error)
+    res.send(error)
+  }
+})
 
 module.exports=route

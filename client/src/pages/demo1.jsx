@@ -37,7 +37,7 @@ return(
       <br/>
       <button onClick={removeAllValue} style={{background:'red',color:'white', margin:'5px'}}>Remove</button>
       <br />
-      <Link to="/" style={{background:'gray',color:'white', margin:'5px'}}>
+      <Link to="/Dashboard" style={{background:'gray',color:'white', margin:'5px'}}>
         <button>Back</button>
       </Link>
     </div>

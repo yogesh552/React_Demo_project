@@ -235,6 +235,8 @@ function Demo2() {
     fetchData(page, rowsPerPage);
   }, [page, rowsPerPage, roleSelector, designationSelector, tableSearch]);
 
+  
+
   // Handle page change
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -313,7 +315,7 @@ function Demo2() {
           rowsPerPageOptions={[5, 10, 25]} // Options for rows per page
         />
 
-        <Link to="/">
+        <Link to="/Dashboard">
           <button>Back</button>
         </Link>
       </div>
