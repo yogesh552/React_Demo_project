@@ -12,23 +12,29 @@ route.post('/login',async function (req, res) {
     console.log('userPassword: ', userPassword);
 
     if(!userId || !userPassword){
-      return  res.status(400).json({success:false, message:"User ID and password are required"})      
+      return  res.status(500).json({success:false, message:"User ID and password are required"})      
     }
     
 
     let qry=`SELECT user_id, user_password, user_name FROM employee_master WHERE user_id = ?`
     con.query(qry,[userId],function(error,result){
       if(error){
-        return res.json({ success:false, message:error})
+        return res.status(500).json({ success:false, message:error})
       }
       console.log('result:', result)
+    
+      if(!result || result.length===0){
+        console.log("dddddd")
+        return res.status(401).json({ success:false,  message:'Credentials not match'})
+      }else{
 
-      if(userId==result[0].user_id && userPassword==result[0].user_password){
-        const token =jwt.sign({userId},jwtSecreatKey,{expiresIn:'1h'})
-        return res.status(200).json({ success:false, token:token, message:'Login Successful'})
-      }
-      else{
-        return res.status(401).json({message:'Invalid Credentials'})
+        if(userId==result[0].user_id && userPassword==result[0].user_password){
+          const token =jwt.sign({userId},jwtSecreatKey,{expiresIn:'1h'})
+          return res.status(200).json({ success:true, token:token, message:'Login Successful'})
+        }
+        else{
+          return res.status(401).json({ success:false,  message:'Credentials not match'})
+        }
       }
 
     })
