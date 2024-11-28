@@ -1,7 +1,44 @@
 const express=require('express');
 const route=express.Router()
 const con=require('../db/connection')  
+const jwt = require('jsonwebtoken')
+const jwtSecreatKey= "jfkl#djivociu$"
 
+route.post('/login',async function (req, res) {
+  try{
+    let userId=req.body.userId  ;
+    console.log('userId: ', userId);
+    let userPassword=req.body.userPassword ;
+    console.log('userPassword: ', userPassword);
+
+    if(!userId || !userPassword){
+      return  res.status(400).json({success:false, message:"User ID and password are required"})      
+    }
+    
+
+    let qry=`SELECT user_id, user_password, user_name FROM employee_master WHERE user_id = ?`
+    con.query(qry,[userId],function(error,result){
+      if(error){
+        return res.json({ success:false, message:error})
+      }
+      console.log('result:', result)
+
+      if(userId==result[0].user_id && userPassword==result[0].user_password){
+        const token =jwt.sign({userId},jwtSecreatKey,{expiresIn:'1h'})
+        return res.status(200).json({ success:false, token:token, message:'Login Successful'})
+      }
+      else{
+        return res.status(401).json({message:'Invalid Credentials'})
+      }
+
+    })
+
+  }
+  catch(error){
+    console.log('Error', error)
+    res.status(500).json({ error:error, message:"Internal serval error"})
+  }
+})
 
 // route.post('/emp_data',function(req,res){
 //     try{
@@ -145,19 +182,5 @@ route.post('/emp_data', function (req, res) {
   }
 });
 
-route.post('/login', function (req, res) {
-  try{
-    let userId=req.body.userId
-    console.log('userId: ', userId);
-    let userPassword=req.body.userPassword
-    console.log('userPassword: ', userPassword);
-
-
-  }
-  catch(error){
-    console.log('Error', error)
-    res.send(error)
-  }
-})
 
 module.exports=route

@@ -10,8 +10,7 @@ const [userPassword, setUserPassword]= useState('')
 const submitBtn =()=>{
     console.log('userId', userId)
     console.log('userPassword', userPassword)
-    axios.post('/http://localhost:4000/login', {userId:userId, userPassword:userPassword})
-
+    axios.post('http://localhost:4000/login', {userId:userId, userPassword:userPassword})
 }
 
 

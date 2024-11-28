@@ -5,7 +5,14 @@ const cors=require('cors')
 dotenv.config({path:'./config.env'})
 const bodyParser = require('body-parser');
 
-app.use(cors())
+const corsOptions = {
+    origin: ['http://localhost:5173'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  };
+app.use(cors(corsOptions));
+  
 app.set('view engine','ejs')
 app.use('/public',express.static("public"))
 
